@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>地理信息系统原理期末复习站</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="bg-grid"></div>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">GIS 期末复习 · 基于文件夹内容整理</p>
+      <h1>地理信息系统原理期末复习站</h1>
+      <p class="hero-text">
+        我把提纲文件里打勾的内容、PPT 章节文字和重点算法整理成了一个单页复习网页。
+        你可以先看重点，再抽题练习，最后直接进入模拟考试。
+      </p>
+      <div class="hero-actions">
+        <a href="#focus" class="btn btn-primary">先看重点</a>
+        <a href="#exam" class="btn btn-ghost">直接模拟考试</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="stat-card">
+        <span>材料章节</span>
+        <strong id="chapterCount">8</strong>
+        <small>第 1、2、3、5、6、7、8、9 章</small>
+      </div>
+      <div class="stat-card">
+        <span>重点条目</span>
+        <strong id="focusCount">0</strong>
+        <small>来自提纲勾选内容</small>
+      </div>
+      <div class="stat-card">
+        <span>题库题目</span>
+        <strong id="questionCount">0</strong>
+        <small>覆盖 5 种题型</small>
+      </div>
+      <div class="stat-card stat-card-wide">
+        <span>复习建议</span>
+        <p>先掌握定义、模型、算法和对比类知识，再用模拟试卷检验。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h2>导航</h2>
+        <a href="#focus">重点提纲</a>
+        <a href="#cards">速记卡片</a>
+        <a href="#bank">题库抽题</a>
+        <a href="#exam">模拟考试</a>
+      </div>
+      <div class="sidebar-card">
+        <h2>复习提醒</h2>
+        <p>优先看带勾的条目，它们是提纲里明确标记的高频考点。</p>
+        <p>章节 4 在文件夹材料中没有单独出现，网页会按已有材料整理。</p>
+      </div>
+    </aside>
+
+    <section class="content">
+      <section class="section" id="focus">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">重点提纲</p>
+            <h2>按章节梳理的核心考点</h2>
+          </div>
+          <div class="toggle-group">
+            <label class="toggle">
+              <input id="focusOnlyToggle" type="checkbox" checked />
+              <span>只看勾选重点</span>
+            </label>
+            <label class="toggle">
+              <input id="compactToggle" type="checkbox" />
+              <span>紧凑显示</span>
+            </label>
+          </div>
+        </div>
+        <div id="chapterGrid" class="chapter-grid"></div>
+      </section>
+
+      <section class="section" id="study">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">知识地图</p>
+            <h2>把每一章拆成更细的复习路径</h2>
+          </div>
+          <span class="pill">定义 · 关系 · 流程 · 应用</span>
+        </div>
+        <div id="studyMap" class="study-map"></div>
+      </section>
+
+      <section class="section" id="cards">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">速记卡片</p>
+            <h2>考前 5 分钟可以快速扫一遍</h2>
+          </div>
+          <span class="pill">定义 · 对比 · 算法 · 公式</span>
+        </div>
+        <div id="cardGrid" class="card-grid"></div>
+      </section>
+
+      <section class="section" id="bank">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">题库抽题</p>
+            <h2>按题型随机抽取，先热身再上试卷</h2>
+          </div>
+          <button id="reshuffleBank" class="btn btn-secondary">刷新题目</button>
+        </div>
+        <div class="bank-toolbar">
+          <label>
+            关键词
+            <input id="bankSearch" type="text" placeholder="搜索章节、题目或关键词" />
+          </label>
+          <label>
+            显示数量
+            <select id="bankLimit">
+              <option value="24">24</option>
+              <option value="48" selected>48</option>
+              <option value="80">80</option>
+              <option value="120">120</option>
+            </select>
+          </label>
+          <div id="bankCount" class="bank-count"></div>
+        </div>
+        <div class="filters">
+          <label>
+            章节
+            <select id="bankChapterFilter"></select>
+          </label>
+          <label>
+            题型
+            <select id="bankTypeFilter"></select>
+          </label>
+        </div>
+        <div id="bankList" class="question-list"></div>
+      </section>
+
+      <section class="section exam-section" id="exam">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">模拟考试</p>
+            <h2>从题库抽题生成试卷</h2>
+          </div>
+          <div class="exam-status">
+            <span id="timerBadge" class="pill pill-soft">未开始</span>
+          </div>
+        </div>
+
+        <div class="exam-toolbar">
+          <div class="toolbar-card toolbar-config">
+            <h3>试卷配置</h3>
+            <div class="count-grid">
+              <label>选择题 <input id="countChoice" type="number" min="0" max="18" value="4" /></label>
+              <label>填空题 <input id="countFill" type="number" min="0" max="18" value="4" /></label>
+              <label>名词解释 <input id="countTerm" type="number" min="0" max="18" value="3" /></label>
+              <label>简答题 <input id="countShort" type="number" min="0" max="18" value="3" /></label>
+              <label>论述题 <input id="countEssay" type="number" min="0" max="18" value="2" /></label>
+              <label>考试分钟 <input id="examMinutes" type="number" min="5" max="180" value="45" /></label>
+            </div>
+            <label class="toggle inline">
+              <input id="preferFocus" type="checkbox" checked />
+              <span>优先抽取勾选重点</span>
+            </label>
+          </div>
+          <div class="toolbar-card toolbar-actions">
+            <h3>操作</h3>
+            <div class="action-row">
+              <button id="generateExam" class="btn btn-primary">生成试卷</button>
+              <button id="startTimer" class="btn btn-secondary">开始计时</button>
+              <button id="submitExam" class="btn btn-ghost">交卷评分</button>
+            </div>
+            <p class="toolbar-note">客观题和填空题可自动判分，主观题会显示参考答案供自评。</p>
+          </div>
+        </div>
+
+        <div id="examSummary" class="summary-banner">
+          先点击“生成试卷”，系统会根据题库抽题并自动组卷。
+        </div>
+        <div id="examHint" class="exam-hint">试卷生成后，这里会显示题量提示和答题建议。</div>
+        <div id="examPaper" class="exam-paper"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="focusModal" class="focus-modal hidden" aria-hidden="true">
+    <div class="focus-modal-backdrop" data-focus-close></div>
+    <div class="focus-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="focusModalTitle">
+      <div class="focus-modal-header">
+        <div>
+          <p class="section-kicker">详细复习</p>
+          <h2 id="focusModalTitle">重点提纲详情</h2>
+        </div>
+        <button type="button" class="focus-modal-close" data-focus-close aria-label="关闭弹窗">×</button>
+      </div>
+      <div id="focusModalBody" class="focus-modal-body"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>已根据文件夹中的提纲文件和各章 PPT 合集整理。你如果愿意，我还可以继续把它扩展成带错题本、背诵模式和打印版试卷的版本。</p>
+  </footer>
+
+  <script src="study-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
